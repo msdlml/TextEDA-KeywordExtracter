@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;          
+            padding: 20px;
+        }
+        .form-container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin: 10px;
+            width: 300px;
+        }
+        .table-container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            flex: 1;
+            margin: 10px;
+            overflow-y: auto; 
+            max-height: 600px;
+        }
+        textarea {
+            width: 95%; 
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .title-column {
+            width: 20%; /* 제목 열 너비 조정 */
+        }
+        
+        .text-column {
+            width: 50%; /* 본문 열 너비 조정 */
+        }
+        .keywords-column {
+            width: 30%; /* 키워드 열 너비 조정 */
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        form {
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>키워드 추출기</h1>
+            <form action="/" method="post">
+                <label for="title">제목 입력</label><br>
+                <textarea id="title" name="title" rows="2" cols="30"></textarea><br>
+                <label for="text">본문 입력</label><br>
+                <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+                <input type="submit" value="추출하기">
+            </form>
+            {% if keywords %}
+                <h2>추출된 키워드</h2>
+                <ul>
+                    {% for keyword, per in keywords %}
+                        <li>{{ keyword }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="table-container">
+            <h2>저장된 키워드 정보</h2>
+            <table>
+                <tr>
+                    <th class="title-column">제목</th>
+                    <th class="text-column">본문</th>
+                    <th class="keywords-column">키워드</th>
+                </tr>
+                {% for data in db_data %}
+                <tr>
+                    <td>{{ data.title }}</td>
+                    <td>{{ data.text }}</td>
+                    <td>{{ data.keywords }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
